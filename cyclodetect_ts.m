@@ -43,7 +43,7 @@ blocksize = floor(N/M);     % block size given smoothing factor M
 t = 0:Ts:blocksize*Ts-Ts;           % time index vector
 window = hamming(blocksize)';       % optional window function
 scd = zeros(1,Nfft);
-sxxyy = zeros(1,Nfft);
+%sxxyy = zeros(1,Nfft);
 
 for i = 1:M
     upshft = exp(sqrt(-1)*pi*alpha*t);       
@@ -51,21 +51,20 @@ for i = 1:M
     u = x((i-1)*blocksize+1:i*blocksize).*upshft;   % shift signal up 1/2 cyclic freq
     v = y((i-1)*blocksize+1:i*blocksize).*dnshft;   % shift signal down 1/2 cyclic freq
     scdyx = fftshift(fft(window.*u,Nfft).*conj(fft(window.*v,Nfft)));
-    sxx = fftshift(fft(window.*u,Nfft));
-    syy = fftshift(fft(window.*v,Nfft));
-    sxxyy = sxxyy + 1/(N*Ts)*abs(sxx.*syy);
-    scd = scd + 1/(N*Ts)*abs(scdyx);            % scale the spectral correlation density
-    
+    %sxx = fftshift(fft(window.*u,Nfft));
+    %syy = fftshift(fft(window.*v,Nfft));
+    %sxxyy = sxxyy + 1/(N*Ts)*abs(sxx.*syy);
+    scd = scd + 1/(N*Ts)*abs(scdyx);            % scale the spectral correlation density  
 end         
 freqx = -fs/2:fs/(Nfft):fs/2-fs/(Nfft);     % frequency axis vector
 
 %-Generate Plots (optional)
 if plotswitch == 1
     figure
-    scd_mag = 1/M*scd./sqrt(sxxyy); 
-    plot(freqx,scd_mag);
-    grid on; 
+    scd_mag = 1/M*scd; 
+    plot(freqx,scd_mag); % add offset to plot as if at carrier freq.
+    grid on; axis tight
     xlabel('Frequency (Hz)')
     ylabel('Magnitude')
-    title("Time-Smoothed Cyclic Spectrum at Baud Rate = ",+ alpha + " Hz" )     
+    title("Time-Smoothed Cyclic Spectrum at Baud Rate = "+ alpha + " Hz" )     
 end

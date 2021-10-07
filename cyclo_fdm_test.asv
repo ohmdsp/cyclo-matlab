@@ -13,21 +13,22 @@ clear all; close all;
 
 %-Read in fdm test signal mat file
 load fdm_test.mat;
-fsk_c = x - mean(x);
+fsk_c = x;
 td = [0:length(fsk_c)-1]*1/fs;
 
 %-Cyclic frequency to test
 alpha = input(['Input baud rate for analysis: ']);
 
 %-Split out I and Q components of fsk signal
-fsk_I = real(fsk_c);
+fsk_I = real(fsk_c) - mean(fsk_;
 fsk_Q = imag(fsk_c);
 
 %-Generate AWGN noise
-sigma_w = 1000;                           % noise variance from input
+sigma_w = 5000;                           % noise variance from input
 Iwn = sigma_w*randn(1,length(fsk_I));
 Qwn = sigma_w*randn(1,length(fsk_Q));
 wn = Iwn + sqrt(-1)*Qwn;                % complex white gaussian noise
+
 
 %-Add AWGN to complex baseband FSK signal
 sigout = fsk_c + wn;
@@ -57,7 +58,7 @@ if plotswitch == 1
     % protect against taking log of zero or negative numbers
     dB_psd = 10*log10( (1/max(ffty_mag)) * ffty_mag + 1.e-10);
     plot(freq,dB_psd);    
-    xlim([-freq_limit,freq_limit]);ylim([-50 10]);grid
+    xlim([-freq_limit,freq_limit]);ylim([-75 10]);grid
     xlabel('FREQUENCY(Hz)');ylabel('DB');
     title('FSK Signal Spectrum')  
 end
