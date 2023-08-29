@@ -10,7 +10,7 @@ clear all; close all;clc
 %-Generate a simulated BPSK signal with AWGN
 N  = 4*128;             % number of symbols
 lmess = 4;              % time duration of signal (seconds)
-fcarr = 20;              % carrier frequency (Hz)
+fcarr = 100;              % carrier frequency (Hz)
 samples = 8;            % samples per symbol
 wgnvar = 0.2;          % variance of added noise (0 to 1)
 plotswitch = 1;         % generate plots 1->plots on, 0->plots off

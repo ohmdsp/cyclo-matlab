@@ -112,7 +112,7 @@ if plotswitch == 1
     %-Plot frequency domain
     subplot(4,1,4)
     plot(freq,10*log10(ffty_mag.^2))
-    xlim([-freq_limit,freq_limit]);ylim([-10 80]);grid
+    xlim([-freq_limit,freq_limit]);ylim([-5 55]);grid
     xlabel('FREQUENCY(Hz)');ylabel('DB');
     title('BPSK Signal Spectrum')
     

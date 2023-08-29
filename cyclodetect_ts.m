@@ -53,7 +53,7 @@ for i = 1:M
     scdyx = fftshift(fft(window.*u,Nfft).*conj(fft(window.*v,Nfft)));
     %sxx = fftshift(fft(window.*u,Nfft));
     %syy = fftshift(fft(window.*v,Nfft));
-    %sxxyy = sxxyy + 1/(N*Ts)*abs(sxx.*syy);
+    %sxxyy = sxxyy + 1/(N*Ts)*1./sqrt(abs(sxx).*abs(syy));
     scd = scd + 1/(N*Ts)*abs(scdyx);            % scale the spectral correlation density  
 end         
 freqx = -fs/2:fs/(Nfft):fs/2-fs/(Nfft);     % frequency axis vector
@@ -62,9 +62,9 @@ freqx = -fs/2:fs/(Nfft):fs/2-fs/(Nfft);     % frequency axis vector
 if plotswitch == 1
     figure
     scd_mag = 1/M*scd; 
-    plot(freqx,scd_mag); % add offset to plot as if at carrier freq.
+    plot(freqx,scd_mag, "LineWidth",1.5); % add offset to plot as if at carrier freq.
     grid on; axis tight
     xlabel('Frequency (Hz)')
     ylabel('Magnitude')
-    title("Time-Smoothed Cyclic Spectrum at Baud Rate = "+ alpha + " Hz" )     
+    title("Time-Smoothed Cyclic Spectrum at \alpha = "+ alpha + " Hz" )     
 end

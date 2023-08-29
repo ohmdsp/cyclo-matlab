@@ -1,6 +1,6 @@
 % Script: cyclo_fdm_test.m
 %
-% Script showing cyclic spectrum for multiple FSK signal test file. 
+% Script showing cyclic spectrum for multiple FSK signal test file (fdm_test.mat). 
 % User enters baud rate for analysis. Generates single cyclic spectrum
 % (Cyclic Correlation Density (SCD)) from single baud rate input. 
 %
@@ -24,7 +24,7 @@ fsk_I = real(fsk_c);
 fsk_Q = imag(fsk_c);
 
 %-Generate AWGN noise
-sigma_w = 1000;                           % noise variance from input
+sigma_w = 100;                           % noise variance from input
 Iwn = sigma_w*randn(1,length(fsk_I));
 Qwn = sigma_w*randn(1,length(fsk_Q));
 wn = Iwn + sqrt(-1)*Qwn;                % complex white gaussian noise
@@ -42,7 +42,7 @@ if plotswitch == 1
     xlim([0 td(end)]);grid
     xlabel('Time')
     ylabel('Amplitude')
-    title('FSK Waveform with AWGN')
+    title('FDM Waveform with AWGN')
    
     %-Take FFT of FSK signal
     y = sigout;
